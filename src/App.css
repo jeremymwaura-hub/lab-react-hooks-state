@@ -1,42 +1,231 @@
-#root {
-  max-width: 1280px;
+/* ═══════════════════════════════════════════════════════════
+   APP SHELL
+   ═══════════════════════════════════════════════════════════ */
+
+.app-wrapper {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text-1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 0 2rem;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+}
+
+.app-header__icon {
+  font-size: 1.7rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px var(--accent-glow));
+}
+
+.app-header__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+/* ─── Dark mode toggle button ────────────────────────────── */
+.dark-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.dark-mode-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.dark-mode-btn:active {
+  transform: translateY(0);
+}
+
+.dark-mode-btn__icon {
+  font-size: 1rem;
+  transition: transform 0.4s ease;
+}
+
+.dark-mode-btn:hover .dark-mode-btn__icon {
+  transform: rotate(20deg);
+}
+
+/* ─── Main layout ────────────────────────────────────────── */
+.app-main {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}
+
+/* ─── Filter bar ─────────────────────────────────────────── */
+.filter-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.filter-bar__label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.filter-bar__select {
+  appearance: none;
+  background-color: var(--surface-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%239b8e7a' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 2.5rem 0.5rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-1);
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition), background-color 0.3s ease;
+  min-width: 160px;
+}
+
+.filter-bar__select:hover {
+  border-color: var(--accent);
+}
+
+.filter-bar__select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.filter-bar__count {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* ─── Sidebar / Cart area ────────────────────────────────── */
+.sidebar {
+  position: sticky;
+  top: 88px;
+  height: fit-content;
+}
+
+/* ─── Product section ────────────────────────────────────── */
+.product-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ─── Product grid ───────────────────────────────────────── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 1rem;
+}
+
+/* ─── Empty state ────────────────────────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
   text-align: center;
+  padding: 3.5rem 2rem;
+  color: var(--text-3);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.empty-state__icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.empty-state__text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-3);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* ─── Section heading ────────────────────────────────────── */
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
 }
 
-.card {
-  padding: 2em;
+.section-heading h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-1);
 }
 
-.read-the-docs {
-  color: #888;
+.section-heading__badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-radius: 99px;
+  padding: 0.1rem 0.55rem;
+  letter-spacing: 0.02em;
 }

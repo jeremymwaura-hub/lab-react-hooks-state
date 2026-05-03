@@ -2,35 +2,69 @@ import React, { useState } from 'react'
 import ProductList from './components/ProductList'
 import DarkModeToggle from './components/DarkModeToggle'
 import Cart from './components/Cart'
+import darkStyles from './styles/DarkMode.module.css'
+import './App.css'
 
 const App = () => {
-  // TODO: Implement state for dark mode toggle
+  const [darkMode, setDarkMode] = useState(false)
+  const [cart, setCart] = useState([])
+  const [category, setCategory] = useState('all')
 
-  // TODO: Implement state for cart management
+  const toggleDarkMode = () => setDarkMode(prev => !prev)
 
-  // TODO: Implement state for category filtering
+  const addToCart = (product) => {
+    setCart(prev =>
+      prev.find(i => i.id === product.id) ? prev : [...prev, product]
+    )
+  }
+
+  const handleCategoryChange = (e) => {
+    const val = e.target.value
+    setCategory(val === '' ? '__none__' : val)
+  }
 
   return (
-    <div>
-      <h1>🛒 Shopping App</h1>
-      <p>
-        Welcome! Your task is to implement filtering, cart management, and dark
-        mode.
-      </p>
+    <div className={`${darkStyles.wrapper} ${darkMode ? darkStyles.dark : darkStyles.light}`}>
 
-      {/* TODO: Render DarkModeToggle and implement dark mode functionality */}
+      {/* ── Header ── */}
+      <header className="app-header">
+        <div className="app-header__brand">
+          <span className="app-header__icon">🛒</span>
+          <span className="app-header__title">FreshCart</span>
+        </div>
+        <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      </header>
 
-      {/* TODO: Implement category filter dropdown */}
-      <label>Filter by Category: </label>
-      <select>
-        <option value="all">All</option>
-        <option value="Fruits">Fruits</option>
-        <option value="Dairy">Dairy</option>
-      </select>
+      {/* ── Main ── */}
+      <main className="app-main">
 
-      <ProductList />
+        {/* Filter bar spans full width */}
+        <div className="filter-bar">
+          <label className="filter-bar__label" htmlFor="category-select">
+            Filter by Category
+          </label>
+          <select
+            id="category-select"
+            className="filter-bar__select"
+            onChange={handleCategoryChange}
+          >
+            <option value="all">All Products</option>
+            <option value="Fruits">Fruits</option>
+            <option value="Dairy">Dairy</option>
+          </select>
+        </div>
 
-      {/* TODO: Implement and render Cart component */}
+        {/* Cart sidebar */}
+        <aside className="sidebar">
+          <Cart cart={cart} />
+        </aside>
+
+        {/* Products */}
+        <section className="product-section">
+          <ProductList category={category} addToCart={addToCart} />
+        </section>
+
+      </main>
     </div>
   )
 }
